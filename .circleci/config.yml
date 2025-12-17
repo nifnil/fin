@@ -9,10 +9,10 @@ jobs:
       - checkout
       - run:
           name: "Install dependencies"
-          command: "pnpm install"
+          command: "pnpm install -C ./src/web"
       - run:
           name: "Run ESLint"
-          command: "pnpm lint"
+          command: "pnpm lint -C ./src/web"
 
   code-review:
     docker:
