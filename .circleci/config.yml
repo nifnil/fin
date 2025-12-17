@@ -9,10 +9,16 @@ jobs:
       - checkout
       - run:
           name: "Install dependencies"
-          command: "pnpm install -C ./src/web"
+          command: |
+            set -e
+            cd ./src/web
+            pnpm install
       - run:
           name: "Run ESLint"
-          command: "pnpm lint -C ./src/web"
+          command: |
+            set -e
+            cd ./src/web
+            pnpm lint
 
   code-review:
     docker:
@@ -20,6 +26,13 @@ jobs:
 
     steps:
       - checkout
+      - run:
+          name: Skip if not PR
+          command: |
+            if [ -z "$CIRCLE_PULL_REQUEST" ]; then
+              echo "Not a PR, skipping AI review"
+              circleci step halt
+            fi
       - run:
           name: Verify required environment variables
           command: |
