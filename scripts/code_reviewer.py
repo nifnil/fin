@@ -6,7 +6,7 @@ import requests
 from anthropic import Anthropic
 import time
 
-MAX_DIFF_SIZE = 15000
+MAX_DIFF_LINES = 2000
 API_TIMEOUT = 30
 GITHUB_API_BASE = "https://api.github.com"
 GITHUB_API_VERSION = "application/vnd.github.v3+json"
@@ -16,7 +16,7 @@ BLOCKING_LABEL = "ai-review-required"
 BLOCKING_KEYWORD = "BLOCKING: YES"
 COMMENT_HEADER = "## 🤖 Claude AI Code Review"
 COMMENT_FOOTER = "*此评审由 Claude AI 自动生成*"
-DIFF_SIZE_ERROR = f"超出最大单次修改限制: {MAX_DIFF_SIZE}行"
+DIFF_SIZE_ERROR = f"超出最大单次修改限制: {MAX_DIFF_LINES}行"
 
 
 def github_request(method, url, headers=None, json=None, expected_status=(200,), retries=3):
@@ -244,8 +244,9 @@ def main():
     print("Getting PR diff...")
     diff = get_pr_diff()
     
-    if len(diff) > MAX_DIFF_SIZE:
-        print("Diff too large, skipping automated review")
+    diff_lines = len(diff.splitlines())
+    if diff_lines > MAX_DIFF_LINES:
+        print(f"Diff too large ({diff_lines} lines), skipping automated review")
         post_review_comment(DIFF_SIZE_ERROR)
         print("Checking label...")
         try_remove_label()
