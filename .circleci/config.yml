@@ -1,7 +1,7 @@
 version: 2.1
 
 jobs:
-  lint:
+  lint-web:
     docker:
       - image: cimg/node:24.12.0
 
@@ -19,6 +19,25 @@ jobs:
             set -e
             cd ./src/web
             pnpm lint
+
+  lint-backend:
+    docker:
+      - image: oven/bun:1.3.5
+
+    steps:
+      - checkout
+      - run:
+          name: "Install dependencies"
+          command: |
+            set -e
+            cd ./src/backend
+            bun install
+      - run:
+          name: "Run ESLint"
+          command: |
+            set -e
+            cd ./src/backend
+            bun run lint
 
   code-review:
     docker:
@@ -59,10 +78,12 @@ jobs:
 workflows:
   pr-review:
     jobs:
-      - lint
+      - lint-web
+      - lint-backend
       - code-review:
           requires:
-            - lint
+            - lint-web
+            - lint-backend
           filters:
             branches:
               ignore:
