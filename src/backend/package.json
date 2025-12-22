@@ -1,0 +1,28 @@
+{
+  "name": "@fin/backend",
+  "module": "index.ts",
+  "type": "module",
+  "scripts": {
+    "drizzle:generate": "bun drizzle-kit generate --config drizzle.config.ts",
+    "drizzle:push": "bun drizzle-kit push --config drizzle.config.ts",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.39.2",
+    "@types/bun": "latest",
+    "@typescript-eslint/eslint-plugin": "^8.50.0",
+    "@typescript-eslint/parser": "^8.50.0",
+    "drizzle-kit": "^0.31.8",
+    "eslint": "^9.39.2",
+    "eslint-plugin-drizzle": "^0.2.3",
+    "tsx": "^4.21.0",
+    "typescript-eslint": "^8.50.0"
+  },
+  "peerDependencies": {
+    "typescript": "^5"
+  },
+  "dependencies": {
+    "drizzle-orm": "^0.45.1"
+  }
+}
