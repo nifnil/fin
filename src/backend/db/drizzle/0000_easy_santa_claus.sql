@@ -90,4 +90,5 @@ ALTER TABLE "article_topics" ADD CONSTRAINT "article_topics_topic_id_topics_id_f
 ALTER TABLE "article_versions" ADD CONSTRAINT "article_versions_article_id_articles_id_fk" FOREIGN KEY ("article_id") REFERENCES "public"."articles"("id") ON DELETE cascade ON UPDATE no action;--> statement-breakpoint
 ALTER TABLE "articles" ADD CONSTRAINT "articles_series_id_series_id_fk" FOREIGN KEY ("series_id") REFERENCES "public"."series"("id") ON DELETE set null ON UPDATE no action;--> statement-breakpoint
 CREATE INDEX "idx_article_versions_article" ON "article_versions" USING btree ("article_id");--> statement-breakpoint
+CREATE INDEX "idx_articles_slug" ON "articles" USING btree ("slug");--> statement-breakpoint
 CREATE INDEX "idx_articles_series" ON "articles" USING btree ("series_id","series_order");
