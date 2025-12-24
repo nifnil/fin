@@ -1,0 +1,15 @@
+{
+  "version": 2,
+  "bunVersion": "1.3.5",
+  "functions": {
+    "api/**/*.ts": {
+      "maxDuration": 500
+    }
+  },
+  "routes": [
+    {
+      "src": "/api/(.*)",
+      "dest": "/api/$1"
+    }
+  ]
+}

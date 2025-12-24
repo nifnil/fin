@@ -25,6 +25,7 @@ export const articlesTable = pgTable(
     isPublished: boolean('is_published').notNull().default(false),
   },
   (table) => [
+    index('idx_articles_slug').on(table.slug),
     index('idx_articles_series').on(table.seriesId, table.seriesOrder),
   ]
 );

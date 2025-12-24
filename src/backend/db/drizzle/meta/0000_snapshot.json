@@ -1,5 +1,5 @@
 {
-  "id": "5581eb6e-1932-43f8-84b1-19b5ff7b74dc",
+  "id": "7a0a38e0-d7e1-4769-b5e4-7533a873ca1d",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "7",
   "dialect": "postgresql",
@@ -355,6 +355,21 @@
         }
       },
       "indexes": {
+        "idx_articles_slug": {
+          "name": "idx_articles_slug",
+          "columns": [
+            {
+              "expression": "slug",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
         "idx_articles_series": {
           "name": "idx_articles_series",
           "columns": [
