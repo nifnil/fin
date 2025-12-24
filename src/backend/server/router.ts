@@ -12,6 +12,27 @@ function filePathToRoute(filePath: string): string {
     .replace(/\[(\w+)\]/g, ':$1');
 }
 
+function castRequest(req: express.Request): Request {
+  const url = `${req.protocol}://${req.get('host')}${req.originalUrl}`;
+  const headers = new Headers();
+  for (const [key, value] of Object.entries(req.headers)) {
+    if (Array.isArray(value)) {
+      headers.append(key, value.join(', '));
+    } else if (value) {
+      headers.append(key, value);
+    }
+  }
+
+  return new Request(url, {
+    method: req.method,
+    headers,
+    body:
+      req.method !== 'GET' && req.method !== 'HEAD'
+        ? JSON.stringify(req.body)
+        : null,
+  });
+}
+
 export async function registerApiRoutes(app: express.Express): Promise<void> {
   const apiDir = path.resolve(import.meta.dir, '../api');
   const methods = ['get', 'post', 'put', 'delete', 'patch'] as const;
@@ -40,7 +61,7 @@ export async function registerApiRoutes(app: express.Express): Promise<void> {
             route,
             async (req: express.Request, res: express.Response) => {
               try {
-                const response = await module[handlerName](req);
+                const response = await module[handlerName](castRequest(req));
 
                 if (response instanceof Response) {
                   const status = response.status;

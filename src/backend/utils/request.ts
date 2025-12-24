@@ -11,7 +11,7 @@ export function getFullUrl(req: Request | express.Request): URL {
   return new URL((req as Request).url);
 }
 
-export function getSlug(req: Request | express.Request): string | null {
+export function getPathSegment(req: Request | express.Request): string | null {
   const url = getFullUrl(req);
   const parts = url.pathname.split('/');
   return parts.pop() ?? null;

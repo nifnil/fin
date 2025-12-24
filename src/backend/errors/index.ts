@@ -5,9 +5,9 @@ export interface ErrorDefinition {
 }
 
 export const Errors = {
-  ARTICLE_NOT_FOUND: {
-    code: 'ARTICLE_NOT_FOUND',
-    message: 'The requested article could not be found.',
+  RESOURCE_NOT_FOUND: {
+    code: 'RESOURCE_NOT_FOUND',
+    message: 'The requested resource could not be found.',
     status: 404,
   },
   USER_UNAUTHORIZED: {
@@ -18,6 +18,11 @@ export const Errors = {
   INVALID_INPUT: {
     code: 'INVALID_INPUT',
     message: 'The provided input is invalid.',
+    status: 400,
+  },
+  BAD_REQUEST: {
+    code: 'BAD_REQUEST',
+    message: 'The request could not be understood or was missing required parameters.',
     status: 400,
   },
   DATABASE_ERROR: {
